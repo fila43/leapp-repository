@@ -3,6 +3,7 @@ from leap.reporting import Report
 from leap.tags.import ChecksPhaseTag, IPUWorkflowTag
 from leap.libraries.actor import nisscanner
 
+
 class NisCheck(Actor):
     """
     Check configuration of ypbind and nsswitch. Address of NIS server cannot be

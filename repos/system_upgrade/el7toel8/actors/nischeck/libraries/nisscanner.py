@@ -1,5 +1,6 @@
 from leapp import reporting
 
+
 class NisScanner:
     """
     Check configuration of /etc/yp.conf and /etc/nsswitch.conf. Address of NIS server cannot be
@@ -78,7 +79,6 @@ class NisScanner:
 
 
     def scan_nsswitch(self):
-
         """
         Read the contents of the ``/etc/nsswitch.conf`` file.
         Each non-commented line is split into the service and its sources.  The
