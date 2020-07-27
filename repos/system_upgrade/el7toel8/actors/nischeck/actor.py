@@ -1,7 +1,7 @@
-from leap.actors import Actor
-from leap.reporting import Report
-from leap.tags.import ChecksPhaseTag, IPUWorkflowTag
-from leap.libraries.actor import nisscanner
+from leapp.actors import Actor
+from leapp.reporting import Report
+from leapp.tags import ChecksPhaseTag, IPUWorkflowTag
+from leapp.libraries.actor import nisscanner
 
 
 class NisCheck(Actor):

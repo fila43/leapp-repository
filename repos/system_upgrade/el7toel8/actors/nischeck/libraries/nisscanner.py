@@ -27,7 +27,7 @@ class NisScanner:
             reporting.Title('Unsupported NIS configuration found'),
             reporting.Summary("NIS may be used for domain name resolution only if NIS "\
                             "server is specified by IP. NIS servers specified by "\
-                            "host name: {}".format(", ".join(hostnames)),
+                            "host name: {}".format(", ".join(hostnames))),
             reporting.Severity(reporting.Severity.MEDIUM)
         ])
 
@@ -46,7 +46,7 @@ class NisScanner:
         path = "/etc/yp.conf"
         try:
             with open(path) as f:
-            lines = f.readlines()
+                lines = f.readlines()
         except IOError:
             return False
 
