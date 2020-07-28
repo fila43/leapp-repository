@@ -1,3 +1,6 @@
+import re
+import ipaddress
+
 from leapp import reporting
 
 
@@ -16,13 +19,13 @@ class NisScanner:
 
         if "hosts" in self.data:
             if "nis" in self.data["hosts"] and hostnames:
-                self.report_error()
+                self.report_error(hostnames)
             else:
-                self.report_succesful()
+                self.report_successful()
         else:
-            self.report_succesful()
+            self.report_successful()
 
-    def report_error(self):
+    def report_error(self, hostnames):
         reporting.create_report([
             reporting.Title('Unsupported NIS configuration found'),
             reporting.Summary("NIS may be used for domain name resolution only if NIS "\
@@ -120,14 +123,14 @@ class NisScanner:
         path = "/etc/nsswitch.conf"
         try:
             with open(path) as f:
-                content = f.read()
+                content = f.readlines()
         except IOError:
             return False
 
         self.parse_content(content)
 
 
-    def get_active_lines(lines, comment_char="#"):
+    def get_active_lines(self, lines, comment_char="#"):
         """
         Returns lines, or parts of lines, from content that are not commented out
         or completely empty.  The resulting lines are all individually stripped.
@@ -156,12 +159,12 @@ class NisScanner:
         self.errors = []
         self.data = {}
         self.sources = set()
-        for line in get_active_lines(content):
+        lines = self.get_active_lines(content)
+        for line in self.get_active_lines(content):
             if ':' not in line:
                 self.errors.append(line)
             else:
                 service, sources = [s.lower().strip() for s in line.split(':', 1)]
                 self.data[service] = sources
                 self.sources.update(set(sources.split(None)))
-
 
