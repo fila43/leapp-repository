@@ -28,9 +28,9 @@ class NisScanner:
     def report_error(self, hostnames):
         reporting.create_report([
             reporting.Title('Unsupported NIS configuration found'),
-            reporting.Summary("NIS may be used for domain name resolution only if NIS "\
-                            "server is specified by IP. NIS servers specified by "\
-                            "host name: {}".format(", ".join(hostnames))),
+            reporting.Summary("NIS may be used for domain name resolution only if NIS "
+                              "server is specified by IP. NIS servers specified by "
+                              "host name: {}".format(", ".join(hostnames))),
             reporting.Severity(reporting.Severity.MEDIUM)
         ])
 
@@ -53,19 +53,19 @@ class NisScanner:
         except IOError:
             return False
 
-        #remove comments
-        lines = list(map(lambda x: x.split("#",1)[0], lines))
+        # remove comments
+        lines = list(map(lambda x: x.split("#", 1)[0], lines))
 
         re_server = r"\s*domain\s+\S+\s+server\s+(\S+)\s*"
         re_ypserver = r"\s*ypserver\s+(\S+)\s*"
 
         # Find server name specified in form: domain NISDOMAIN server HOSTNAME
         mtchs = list(filter(lambda x: x is not None,
-                map(lambda x: re.match(re_server, x), lines)))
+                            map(lambda x: re.match(re_server, x), lines)))
 
         # Find server name specified in form: ypserver HOSTNAME
         mtchs.extend(list(filter(lambda x: x is not None,
-                map(lambda x: re.match(re_ypserver, x), lines))))
+                                 map(lambda x: re.match(re_ypserver, x), lines))))
 
         # Get hostnames from matches
         hostnames = list(map(lambda x: x.group(1), mtchs))
@@ -79,7 +79,6 @@ class NisScanner:
                 not_ips.append(h)
 
         return not_ips
-
 
     def scan_nsswitch(self):
         """
@@ -129,7 +128,6 @@ class NisScanner:
 
         self.parse_content(content)
 
-
     def get_active_lines(self, lines, comment_char="#"):
         """
         Returns lines, or parts of lines, from content that are not commented out
@@ -154,7 +152,6 @@ class NisScanner:
         """
         return list(filter(None, (line.split(comment_char, 1)[0].strip() for line in lines)))
 
-
     def parse_content(self, content):
         self.errors = []
         self.data = {}
@@ -167,4 +164,3 @@ class NisScanner:
                 service, sources = [s.lower().strip() for s in line.split(':', 1)]
                 self.data[service] = sources
                 self.sources.update(set(sources.split(None)))
-
