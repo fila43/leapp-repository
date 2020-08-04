@@ -16,5 +16,3 @@ class NisCheck(Actor):
 
     def process(self):
         scan()
-
-
