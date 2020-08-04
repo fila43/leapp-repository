@@ -3,6 +3,7 @@ from leapp.reporting import Report
 from leapp.tags import ChecksPhaseTag, IPUWorkflowTag
 from leapp.libraries.actor.nischeck import scan
 
+
 class NisCheck(Actor):
     """
     Check configuration of ypbind and nsswitch. Address of NIS server cannot be
