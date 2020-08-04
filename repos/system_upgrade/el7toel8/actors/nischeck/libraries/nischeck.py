@@ -14,7 +14,7 @@ Parameters:
 
 def scan():
     hostnames = hostnames_in_yp_conf()
-    data,_  = scan_nsswitch()
+    data, _ = scan_nsswitch()
 
     if "hosts" in data:
         if "nis" in data["hosts"] and hostnames:
