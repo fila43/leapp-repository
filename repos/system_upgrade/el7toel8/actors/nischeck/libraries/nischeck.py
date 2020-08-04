@@ -14,7 +14,7 @@ Parameters:
 
 def scan():
     hostnames = hostnames_in_yp_conf()
-    data, soueces = scan_nsswitch()
+    data,_  = scan_nsswitch()
 
     if "hosts" in data:
         if "nis" in data["hosts"] and hostnames:
@@ -53,7 +53,7 @@ def hostnames_in_yp_conf():
         return False
 
     # remove comments
-    lines = list(map(lambda x: x.split("#",1)[0], lines))
+    lines = list(map(lambda x: x.split("#", 1)[0], lines))
 
     re_server = r"\s*domain\s+\S+\s+server\s+(\S+)\s*"
     re_ypserver = r"\s*ypserver\s+(\S+)\s*"
@@ -162,4 +162,3 @@ def parse_content(content):
             sources1.update(set(sources.split(None)))
 
     return data1, sources1
-
