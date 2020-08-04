@@ -4,15 +4,12 @@ import ipaddress
 from leapp import reporting
 
 
-"""
-Check configuration of /etc/yp.conf and /etc/nsswitch.conf. Address of NIS server cannot be
-specified by host name if NIS is used to resolve host names.
-Parameters:
-    sources (set) set of labels from nsswitch
-    data (dict) list of values for each source
-"""
-
 def scan():
+    """
+    Check configuration of /etc/yp.conf and /etc/nsswitch.conf. Address of NIS server cannot be
+    specified by host name if NIS is used to resolve host names.
+    """
+
     hostnames = hostnames_in_yp_conf()
     data, _ = scan_nsswitch()
 
@@ -24,14 +21,16 @@ def scan():
     else:
         report_successful()
 
+
 def report_error(hostnames):
     reporting.create_report([
         reporting.Title('Unsupported NIS configuration found'),
-        reporting.Summary("NIS may be used for domain name resolution only if NIS "\
-                        "server is specified by IP. NIS servers specified by "\
-                        "host name: {}".format(", ".join(hostnames))),
+        reporting.Summary("NIS may be used for domain name resolution only if NIS "
+                          "server is specified by IP. NIS servers specified by "
+                          "host name: {}".format(", ".join(hostnames))),
         reporting.Severity(reporting.Severity.MEDIUM)
     ])
+
 
 def report_successful():
     reporting.create_report([
@@ -39,6 +38,7 @@ def report_successful():
         reporting.Summary('Check successful'),
         reporting.Severity(reporting.Severity.INFO)
     ])
+
 
 def hostnames_in_yp_conf():
     """
