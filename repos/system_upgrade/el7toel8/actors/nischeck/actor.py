@@ -1,7 +1,7 @@
 from leapp.actors import Actor
 from leapp.reporting import Report
 from leapp.tags import ChecksPhaseTag, IPUWorkflowTag
-from leapp.libraries.actor.nischeck import NisScanner
+from leapp.libraries.actor.nischeck import scan
 
 class NisCheck(Actor):
     """
@@ -15,7 +15,6 @@ class NisCheck(Actor):
     tags = (IPUWorkflowTag, ChecksPhaseTag)
 
     def process(self):
-        scanner = NisScanner()
-        scanner.scan()
+        scan()
 
 
