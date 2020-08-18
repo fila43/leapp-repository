@@ -17,6 +17,7 @@ def scan():
         if "nis" in data["hosts"] and hostnames:
             report_error(hostnames)
 
+
 def report_error(hostnames):
     reporting.create_report([
         reporting.Title('Unsupported NIS configuration found'),
@@ -25,6 +26,7 @@ def report_error(hostnames):
                           "host name: {}".format(", ".join(hostnames))),
         reporting.Severity(reporting.Severity.MEDIUM)
     ])
+
 
 def hostnames_in_yp_conf():
     """
