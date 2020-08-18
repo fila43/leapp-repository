@@ -16,11 +16,6 @@ def scan():
     if "hosts" in data:
         if "nis" in data["hosts"] and hostnames:
             report_error(hostnames)
-        else:
-            report_successful()
-    else:
-        report_successful()
-
 
 def report_error(hostnames):
     reporting.create_report([
@@ -30,15 +25,6 @@ def report_error(hostnames):
                           "host name: {}".format(", ".join(hostnames))),
         reporting.Severity(reporting.Severity.MEDIUM)
     ])
-
-
-def report_successful():
-    reporting.create_report([
-        reporting.Title('Checking NIS configuration'),
-        reporting.Summary('Check successful'),
-        reporting.Severity(reporting.Severity.INFO)
-    ])
-
 
 def hostnames_in_yp_conf():
     """
@@ -53,7 +39,7 @@ def hostnames_in_yp_conf():
         return False
 
     # remove comments
-    lines = list(map(lambda x: x.split("#", 1)[0], lines))
+    lines = [l.split("#", 1)[0] for l in lines]
 
     re_server = r"\s*domain\s+\S+\s+server\s+(\S+)\s*"
     re_ypserver = r"\s*ypserver\s+(\S+)\s*"
